@@ -594,10 +594,10 @@ google_adsense:
 # --------------------------------------
 
 site_verification:
-  # - name: google-site-verification
-  #   content: xxxxxx
-  # - name: baidu-site-verification
-  #   content: xxxxxxx
+   - name: google-site-verification
+     content: oMGwvAFHPDoXj1zawKNDffRQhkEu9BwZwNxguwSOmME
+   - name: baidu-site-verification
+     content: codeva-Hh6iTMSXwA
 
 # Beautify/Effect (美化/效果)
 # --------------------------------------

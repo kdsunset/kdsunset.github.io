@@ -1,0 +1,6 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://kdsunset.top/sitemap.xml
+Sitemap: https://kdsunset.top/baidusitemap.xml
