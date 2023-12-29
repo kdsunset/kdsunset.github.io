@@ -1,13 +1,9 @@
----
-title: Ubuntu 22.04安装教程及使用技巧
-categories: 技术
-abbrlink: ac99d9f6
----
 # Ubuntu 22.04安装教程及使用技巧
 
 ## 前言
-&emsp;&emsp;通常所说的 Linux 其是指Linux内核，Linux 系统是指基于 Linux 内核的操作系统的泛称，而不是一个具体的操作系统。Ubuntu 则是 Linux 其中一个发行版，其他比较知名的还有 Debian、Fedora、CentOS等。<br/>
-&emsp;&emsp;作为程序员，我们可以用使用 Ubuntu 系统来体验 Linux、 熟悉命令行操作、部署服务器、搭建梯子和交叉编译，如编译 Android 项目所需的so库，编译 Android 系统源码等等。本文将面向新手介绍在 VMware 中安装和配置 Ubuntu 的过程，以及一些常用的技巧和命令。
+通常所说的 Linux 其是指Linux内核，Linux 系统是指基于 Linux 内核的操作系统的泛称，而不是一个具体的操作系统。Ubuntu 则是 Linux 其中一个发行版，其他比较知名的还有 Debian、Fedora、CentOS等。<br/>
+
+作为程序员，我们可以用使用 Ubuntu 系统来体验 Linux、 熟悉命令行操作、部署服务器、搭建梯子和交叉编译，如编译 Android 项目所需的so库，编译 Android 系统源码等等。本文将面向新手介绍在 VMware 中安装和配置 Ubuntu 的过程，以及一些常用的技巧和命令。
 
 本文所用环境
 *   VMware Workstation 17 Pro
@@ -300,4 +296,4 @@ script -f -a /path/log.txt
 ```
 
 ## 总结
-&emsp;&emsp;以上便是Ubuntu从虚拟机配置参数讲解到Ubuntu安装的全过程，以及一些个人认为比较实用的使用技巧。至于命令，如果是体验Linux记不住也没关系，当你有实际需求时，例如交叉编译源码，你会记住的。
+以上便是Ubuntu从虚拟机配置参数讲解到Ubuntu安装的全过程，以及一些个人认为比较实用的使用技巧。至于命令，如果是体验Linux记不住也没关系，当你有实际需求时，例如交叉编译源码，你会记住的。

@@ -1,6 +1,17 @@
 # hexo robots.txt
 User-agent: *
 Allow: /
+Allow: /posts/
+
+Disallow: /tags/
+Disallow: /categories/
+Disallow: /about/
+Disallow: /archives/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /lib/
+
 
 Sitemap: https://kdsunset.top/sitemap.xml
 Sitemap: https://kdsunset.top/baidusitemap.xml

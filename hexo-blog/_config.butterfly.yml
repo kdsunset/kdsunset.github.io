@@ -97,9 +97,9 @@ error_img:
 
 # A simple 404 page
 error_404:
-  enable: false
-  subtitle: 'Page Not Found'
-  background: https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png
+  enable: true
+  subtitle: '页面沒有找到'
+  background: /img/404_cat.jpg #https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png
 
 post_meta:
   page: # Home Page
@@ -149,7 +149,7 @@ copy:
 toc:
   post: true
   page: false
-  number: true
+  number: false
   expand: false
   style_simple: false # for post
   scroll_percent: true
@@ -404,7 +404,7 @@ addtoany:
 comments:
   # Up to two comments system, the first will be shown as default
   # Choose: Disqus/Disqusjs/Livere/Gitalk/Valine/Waline/Utterances/Facebook Comments/Twikoo/Giscus/Remark42/Artalk
-  use: Valine
+  use: Valine,Gitalk
   text: true # Display the comment name next to the button
   # lazyload: The comment system will be load when comment element enters the browser's viewport.
   # If you set it to true, the comment count will be invalid
@@ -434,11 +434,11 @@ livere:
 # gitalk
 # https://github.com/gitalk/gitalk
 gitalk:
-  client_id:
-  client_secret:
-  repo:
-  owner:
-  admin:
+  client_id: 87bca2541154998d9e5d
+  client_secret: b1b448a15758ff09af4f4810c6a66d479d01e00d
+  repo: kdsunset.github.io
+  owner: kdsunset
+  admin: kdsunset
   option:
 
 # valine
@@ -447,7 +447,7 @@ valine:
   appId: 2wvhFjzp3cI1Jo1r0kGvI0PA-MdYXbMMI
   appKey: jqpcAA3JdCnCM8NVPMY4nrOR
   avatar: monsterid # gravatar style https://valine.js.org/#/avatar
-  serverURLs: # This configuration is suitable for domestic custom domain name users, overseas version will be automatically detected (no need to manually fill in)
+  serverURLs: https://api.kdsunset.top # This configuration is suitable for domestic custom domain name users, overseas version will be automatically detected (no need to manually fill in)
   bg: # valine background
   visitor: false
   option:
@@ -916,6 +916,7 @@ inject:
     # - <link rel="stylesheet" href="/xxx.css">
     - <link rel="stylesheet" href="/css/my_bg_color.css">
   bottom:
+    - <script src="//github.elemecdn.com/leancloud-storage@3/dist/av-min.js"></script>
     # - <script src="xxxx"></script>
 
 # CDN

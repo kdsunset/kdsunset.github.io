@@ -433,11 +433,11 @@ livere:
 # gitalk
 # https://github.com/gitalk/gitalk
 gitalk:
-  client_id:
-  client_secret:
-  repo:
-  owner:
-  admin:
+  client_id: 87bca2541154998d9e5d
+  client_secret: b1b448a15758ff09af4f4810c6a66d479d01e00d
+  repo: kdsunset.github.io
+  owner: kdsunset
+  admin: kdsunset
   option:
 
 # valine

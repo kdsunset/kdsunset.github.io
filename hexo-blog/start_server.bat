@@ -4,6 +4,6 @@ taskkill /IM "node.exe" /F
 echo Hexo server stopped.
 
 echo Starting Hexo server...
-hexo clean && hexo g && hexo server 
+hexo clean && hexo g && gulp && hexo server 
 echo Hexo server started.
 

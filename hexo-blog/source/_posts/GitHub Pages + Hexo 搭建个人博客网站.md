@@ -1,15 +1,14 @@
 ---
-title: GitHub Pages + Hexo搭建个人博客网站
+title: Hexo + GitHub Pages 搭建个人博客网站
 categories: 技术
 tags:
   - Hexo
 abbrlink: 'hxpghblog'
 ---
-# GitHub Pages + Hexo搭建个人博客网站
+# Hexo + GitHub Pages 搭建个人博客网站
 ## 前言 
-&emsp;&emsp;Hexo 是一个基于 Node.js 构建的静态博客框架。它能够根据 Markdown 文件生成静态的 HTML 网页，方便快速搭建静态网站。
-GitHub Pages 是 GitHub 提供的一项上免费托管和发布静态网站的服务，有了它可以省去自己购买和维护服务器的成本。  
-如果你想搭建一个个人网站或者博客，GitHub Pages + Hexo是一个不错且主流的方案。你只需要掌握一点markdown语法和git使用配合教程就可以快速上手，同时这也是本站的搭建过程~
+&emsp;&emsp;Hexo [/hækso/]是一个基于 Node.js 构建的静态博客框架。它能够根据 Markdown 文件生成静态的 HTML 网页，方便快速搭建静态网站。GitHub Pages 是 GitHub 提供的一项上免费托管和发布静态网站的服务，有了它可以省去自己购买和维护服务器的成本。  
+&emsp;&emsp;如果你想搭建一个个人网站或者博客，GitHub Pages + Hexo是一个不错且主流的方案。你只需要掌握一点markdown语法和git使用配合教程就可以快速上手，同时这也是本站的搭建过程~
 
 #### 本文环境 
 * Win 10
@@ -17,12 +16,15 @@ GitHub Pages 是 GitHub 提供的一项上免费托管和发布静态网站的�
 * git
 
 ## 1 安装软件
-### 1.1 安装NodeJS
+### 1.1 安装git
+如果还没有安装git，在[官网](https://git-scm.com/)下载并安装git，安装过程全部选软件推荐的选项就好
+### 1.2 安装NodeJS
 * 在[NodeJS官网](https://nodejs.org/zh-cn/download/)下载安装包并安装
 * 配置环境变量，如果选择的是msi格式的安装包会自动添加环境变量
 
-### 1.2 安装 Hexo
-新建一个文件夹作为你网站的根目录，在当前目录打开命令提示符（在地址栏输入"cmd"），使用以下命令安装Hexo
+### 1.3 安装 Hexo
+新建一个文件夹作为你网站的根目录，打开命令提示符（或者git bash）并cd到当前目录，使用以下命令安装Hexo
+ps：在地址栏输入"cmd"即可打开一个定位到当前目录的命令提示符
 ```
 # 使用 npm 安装 Hexo
 npm install -g hexo-cli
@@ -42,7 +44,7 @@ npm install
 
 ```
 Hexo 初始化完成后，会生成一个包含基本文件和目录的项目结构
-```
+``` 
 hexo-blog/         # 项目根目录
 |-- _config.yml    # 主配置文件
 |-- node_modules/  # Node.js 模块目录，通过 npm install 安装
@@ -61,7 +63,7 @@ hexo-blog/_config.yml是heox的主配置文件，用来定义博客的各种设�
 ps：yaml是一个方便人类阅读的数据序列化格式，通常用来做配置文件，主要用缩进来表示层次结构，另外注意"key: value"的value前面有一个空格
 ### 2.1 网站Site信息
 * 打开_config.yml主配置文件，找到site字段，修改网站基本信息
-```
+```yaml
 # Site
 title: # 网站标题
 subtitle: 
@@ -73,18 +75,20 @@ timezone: ''
 ```
 ### 2.2 开启文章资源文件夹（可选/推荐）
 
-```
+```yaml
 # 通过 hexo new [layout] <title> 命令创建新文章时自动创建同名文件夹
 post_asset_folder: true
 ```
 ### 2.3 配置永久链接（可选/推荐）
 Hexo 默认的链接格式是permalink: :year/:month/:day/:title/，配置永久链接有助于优化网站的 SEO：
+
 ```
 # 安装插件
 npm install hexo-abbrlink --save
 ```
 修改主配置
-```
+
+```yaml
 permalink: :abbrlink/ #文章的永久链接 
 abbrlink:
   alg: crc32  #算法: crc16(default) and crc32
@@ -99,7 +103,11 @@ abbrlink:
 hexo g
 hexo server
 ```
-* 浏览器访问 http://localhost:4000，即可看到默认的主题风格，同时可以看到hexo默认生成了一篇名为“Hello World”的文章。
+待终端输出类似以下字样说明启动成功
+```
+INFO  Hexo is running at http://localhost:4000/ . Press Ctrl+C to stop.
+```
+在浏览器访问 http://localhost:4000，即可看到默认的主题风格，同时可以看到hexo默认生成了一篇名为“Hello World”的文章。
 
 ![默认主题的预览效果](/images/article01/70321.png)
 
@@ -143,7 +151,7 @@ hexo publish draft <title>
 缺点：无法在 Markdown 编辑器中正常显示图片
 改进：插件hexo-renderer-marked解决了这个问题
 可以只用npm install hexo-renderer-marked命令直接安装，之后在config.yaml中更改配置如下：
-```
+```yaml
 post_asset_folder: true
 marked:
   prependRoot: true
@@ -165,7 +173,7 @@ hexo server
 ```
 * 可以将指令编写到批处理文件，省去每次输入命令:
 在项目根目录创建start_server.bat文件，添加以下内容并保存，之后通过双击运行来启动服务器。
-```
+```bat
 @echo off
 echo Stopping Hexo server...
 taskkill /IM "node.exe" /F
@@ -180,6 +188,7 @@ echo Hexo server started.
 以上只是本地预览，想要别人访问得到这个博客，还需要部署到服务器上自己的服务器上或者GitHub Pages等托管服务。
 以下以发布到Github Pages为例：
 1. 创建github仓库
+
 填写仓库名，名称为"username.github.io"，username是你的Github用户名，仓库属性为public  
 
 如果你的 GitHub 仓库命名为 username.github.io，GitHub Pages 将会默认将站点托管在 username.github.io 这个域名下，否则会托管在username.github.io/仓库名 这个路径下
@@ -190,7 +199,7 @@ echo Hexo server started.
 npm install hexo-deployer-git --save
 ```
 3. 修改网站配置文件
-```
+```yaml
 deploy:
   type: git  
   repo: git@github.com:xxxx/xxxx.github.io.git # 仓库地址
@@ -204,7 +213,14 @@ hexo deploy
 # 生成静态文件并部署
 hexo g -d
 ```
-浏览器访问 https://username.github.io/，部署成功，这就是你的个人博客了，Congratulations！
+为了方便发布，我们将上面的启动服务器脚本修改一下，移除本地预览并在生成后同时部署，新建deploy.bat文件（如果使用git bash则将文件后缀改成.sh，运行时执行"./deploy.sh"），使用文本编辑器增加以下内容:
+```bat
+echo Starting Hexo deploy...
+hexo clean && hexo g -d
+echo Hexo deploy success !
+```
+，
+双击运行deploy.bat，待终端输出“INFO  Deploy done: git”字样说明网页已经提到到Github，在浏览器访问 `https://username.github.io/`，部署成功，这就是你的个人博客了，Congratulations！
 
 
 ## 4 更换主题
@@ -221,7 +237,7 @@ git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes
 ```
 ### 4.2 应用主题
 * 修改 Hexo 根目录下的 _config.yml，把主題改为 butterfly
-```
+```yaml
 theme: butterfly
 ```
 ### 4.3 安装渲染器插件
@@ -234,7 +250,7 @@ extends includes/layout.pug block content include ./includes/mixins/post-ui.pug 
 npm install hexo-renderer-pug hexo-renderer-stylus --save
 ```
 双击start_server.bat 重新启动服务器，可以看到主题效果生效了
-ps：。
+
 
 ![butterfly主题预览效果](/images/article01/70521.png)
 
@@ -245,7 +261,7 @@ butterfly升级主题可能会覆盖主题下的_config.yml配置文件，官方
 以下是一些比较常用的配置
 #### 4.4.1 配置导航栏
 butterfly 提供了默认的导航栏tab，只需要将menu字段下的tab去掉前面的#注释即可，形式是"名称：链接地址 || 图标([Font Awesome](https://fontawesome.com/)
-```
+```yaml
 menu:
    首页: / || fas fa-home
    归档: /archives/ || fas fa-archive
@@ -268,7 +284,7 @@ Cannot GET /about/
 hexo new page about
 ```
 使用该命令后会生成/source/about/index.md文件，打开并添加layout: about属性以及更多正文信息
-```
+```yaml
 ---
 title: about
 date: 2020-02-23 19:20:33
@@ -292,13 +308,13 @@ hexo new page tags
 在 source/tags/index.md 中添加标签属性type: "tags"
 ##### 使用标签
 在文章的开头的Front-matter区域，添加以下字段即可新增分类或者标签：
-```
+```yaml
 categories: 技术
 tags:
   - Hexo
 ```
 #### 4.4.3 头像
-```
+```yaml
 avatar:
   img: /img/avatar.png # 头像图片
   effect: true # 头像动效
@@ -311,11 +327,11 @@ avatar:
 
 #### 4.4.5 评论功能
 一般的主题都支持多个评论插件，如disqus、gitalk、valine、 waline、twikoo等
-以Valine为例，Valine需要LeanCloud支持，
-1. 登录或注册 LeanCloud，如果是国际版不需要实名认证， 进入控制台后点击左下角创建应用
-2. 应用创建好以后，进入刚刚创建的应用，选择左下角的设置>应用Key，复制APP ID和APP Key
-3. 在主题配置文件的comments字段下的user设置为Valine,valine填写AppID 和 AppKey
-```
+##### 以Valine为例
+1. Valine需要LeanCloud支持，登录或注册 LeanCloud，如果是国内版需要实名，国际版不需要实名认证，然而国际版共享域名不再向中国大陆提供服务（国区IP用户无法评论），需要使用自定义域名。进入控制台后点击左下角创建应用
+2. 应用创建好以后，进入刚刚创建的应用，选择左下角的设置>应用Key，复制APP ID、APP Key和serverURLs，由于国际版通用域名失效了，所以现在serverUrl也是要填的
+3. 在主题配置文件的comments字段下的user设置为Valine,valine填写以下内容，重新部署刷新页面即可看到评论区
+```yaml
 comments:
   # Up to two comments system, the first will be shown as default
   use: Valine
@@ -323,11 +339,50 @@ comments:
   valine:
   appId: # your appId
   appKey: # your appKey
+  serverURLs:          
 ```
+
+4. LeanCloud 使用自定义域名（可选）
+这里请配合下文的绑定域名使用，可以先跳过。如果自己申请了域名，可以为LeanCloud绑定api域名。
+* 在应用控制台 > 设置 > 域名绑定 > API 访问域名 绑定 API 域名，填入自定义的二级域名例如`api.kdsunset.top
+`，勾选ssl和强制https，点击绑定后会生成一条推荐 DNS 配置
+* 在域名管理后台新增一条CNAME记录，将刚才生成推荐 DNS 配置填入
+
+| HOSTNAME | TYPE | ADDRESS |
+| --- | --- | --- |
+| api | CNAME | username.github.io |
+* 最后将serverURLs的值修改成自定义域名。
+
+
+ butterfly 支持双评论系统，我们再配置一个Gitalk：
+##### Gitalk
+1. 创建 Github 应用：登录Github，打开Settings->Developer Settings->OAuth Apps->New OAuth Apps，填写以下信息，创建成功后会生成Client ID和Client Secret
+```
+Application name：应用名，方便起见直接填github用户名
+Homepage URL：网站地址
+Application description：应用描述
+Authorization callback URL：网站地址
+```
+2. 修改butterfly的主题配置
+```
+comments:
+  #开启双评论
+  use: Valine,Gitalk
+
+# https://github.com/gitalk/gitalk
+gitalk:
+  client_id: # 上一步创建的Github 应用的Client ID
+  client_secret: # 上一步创建的Github 应用的Client Secret
+  repo: # 关联的Github Pages的仓库名（本文3.3小节部署服务器）
+  owner: # 你的Github 用户名
+  admin: # 你的Github 用户名
+  option:
+```
+3. 重新部署，在文章下的评论区即可看到gitalk评论功能。如果提示“未找到相关Issue进行评论”，则点击下方的“使用GitHub登录”，然后刷新一下页面即可，缺点就是每篇文章发布后都需要手动初始化以下，或者使用自动初始化脚本
 
 #### 4.4.6 访问人数和阅读统计
 butterfly的默认调用busuanzi的进行统计，设置以下字段，刷新页面后在侧边栏的网站资讯看到本站访客数和本站总访问量。文章标题后面带有阅读量次数
-```
+```yaml
 busuanzi:
   site_uv: true
   site_pv: true
@@ -340,7 +395,7 @@ busuanzi:
 npm install hexo-wordcount --save
 ```
 配置以下字段
-```
+```yaml
 wordcount:
   enable: true
   post_wordcount: true
@@ -352,7 +407,7 @@ wordcount:
 * 以百度统计为例
 * 登录百度统计官网管理后台，使用设置->账户设置->网站列表->新增网站
 * 复制应用的统计代码中的key到配置中的baidu_analytics字段
-```
+```yaml
 # 填写百度统计代码的key（形如“  hm.src = "https://hm.baidu.com/hm.js?28e4ea7748d7403e4bf35f897a5e67e0";）
 baidu_analytics: 
 
@@ -371,9 +426,59 @@ Butterfly主题需要使用到很多图片。如果图片太大，会严重拖�
 * [tinypng](https://tinypng.com/)
 * caesium
 
-## 总结
+## 5 其他优化
 一通操作下来，相信你的博客样式已经变得称心如意了，但是优化还远不止如此，如果觉得username.github.io格调不够高可以绑定自己的域名；如果想在搜索引擎更容易搜索到自己的博客需要做SEO优化；如果图片越来越多需要优化加载速度就需要使用图床来管理图片。
-以上~
+
+### 5.1 绑定域名
+
+域名注册商国内有阿里云、腾讯等，国外有GoDaddy、namesilo等，我选的是namesilo，国外的服务不需要备案，namesilo也支持支付宝，下面以namesilo为例  
+
+1. 注册namesilo或者其他服务商，购买一个你钟意的域名。注册和购买域名不是本文重点就不展开了，网站有很多教程。
+2. 配置DNS，在namesilo点击个人头像进入Domain Manager页面,点击你的刚注册的域名，找到DNS Records，点击update，
+* 添加以下A记录，A记录是将域名解析到ip地址，即将域名指向你的username.github.io的ip地址，注意这里**不要用ping** 的方式获取username.github.io的ip，因为这个ip是动态的，而是使用Github 官方文档[管理 GitHub Pages 站点的自定义域](https://docs.github.com/zh/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)提供的ip。
+
+* 添加CNAME记录，将你的域名解析到另一个域名，即username.github.io域名
+
+| HOSTNAME | TYPE | ADDRESS |
+| --- | --- | --- |
+|  | A | 185.199.108.153 |
+|  | A | 185.199.109.153 |
+|  | A | 185.199.110.153 |
+|  | A | 185.199.111.153 |
+| www | CNAME | username.github.io |
+
+4. 设置的CNAME文件
+在source文件夹中下创名为"CNAME"的文件（删除后缀名），使用文本编辑器该文件，内容就是你的域名,例如
+```
+xxxx.com
+```
+5. 设置Github仓库
+Github支持自定义域的HTTPS，打开Github 仓库，点击Settings->Pages->GitHub Pages，你会发现已经指向你的自定义域名了，勾选Enforce HTTPS ，使用Github Page自带的证书，稍等片刻（DNS生效需要时间），就可以使用HTTPS协议访问你的域名了。
+
+### 5.2 CDN加速
+由于Github在国内的访问速度是比较慢的，为了优化访问网站的速度，可以使用Github pages+国内托管平台，如gitee、coding，双线部署的方式，这两个都需要实名备案，另一种方式是使用cdn加速，目前cloudfare有免费的服务，对国内用户来说访问速度应该好于直接访问Github （吧）。
+
+1 登录（注册）[cloudflare]("https://cloudflare.com/")，
+2. 添加站点。进入控制台，点击"添加站点"填写你的域名（不需要www），下一步选择个人免费版，等待系统扫描DNS记录，然后会分配 Cloudflare 名称服务器，根据提示将原来dns服务器替换成Cloudflare 名称服务器
+3. 更改DNS服务器
+登录注册博客的域名的服务商管理后台，本例是namesilo，打开namesilo管理后台，点击NameServer Manager，备份一下原来的dns服务器，以免cloudfare免费版不可用了时方便还原回去。
+```
+NS1.DNSOWL.COM
+NS2.DNSOWL.COM
+NS3.DNSOWL.COM
+```
+然后全部删除，替换成Cloudflare提供的 名称服务器
+```
+kristina.ns.cloudflare.com
+mario.ns.cloudflare.com
+```
+4.等待激活
+修改DNS的解析后，需要一个生效时间，回到Cloudflare平台查看更新状态，激活后会发送电子邮件到注册Cloudflare的邮箱。
+如果激活以后访问博客首页出现“重定向次数过多的”错误，则需要将cloudflare管理后台的SSL/TLS设置成“完全”模式。
+
+## 总结
+以上就是使用hexo + GitHub Pages 的搭建博客网站的教程，
+seo优化的内容和图床的配置篇幅比较多，将在新文章中展开。
 
 ## 参考资料
 [1]. Hexo : https://hexo.io/zh-cn/docs/
