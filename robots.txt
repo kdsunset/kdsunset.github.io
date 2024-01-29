@@ -1,0 +1,20 @@
+# hexo robots.txt
+# 允许所有用户代理的浏览器爬虫进行访问（爬取数据）
+User-agent: *
+
+Allow: /
+Allow: /posts/
+
+Disallow: /tags/
+Disallow: /categories/
+Disallow: /about/
+Disallow: /archives/
+# 如果js和fonts这些加了disallow的话，会出现谷歌抓取问题的话，就取消
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /lib/
+
+# 最后面两行是site-map
+Sitemap: https://kdsunset.top/sitemap.xml
+Sitemap: https://kdsunset.top/baidusitemap.xml
