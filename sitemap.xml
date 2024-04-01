@@ -110,28 +110,7 @@
 
   
   <url>
-    <loc>https://kdsunset.top/tags/Ubuntu/</loc>
-    <lastmod>2024-04-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kdsunset.top/tags/envoy-mobile/</loc>
-    <lastmod>2024-04-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kdsunset.top/tags/Hexo/</loc>
-    <lastmod>2024-04-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kdsunset.top/tags/envoy/</loc>
     <lastmod>2024-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -152,7 +131,21 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/aosp/</loc>
+    <loc>https://kdsunset.top/tags/Ubuntu/</loc>
+    <lastmod>2024-04-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/envoy-mobile/</loc>
+    <lastmod>2024-04-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/envoy/</loc>
     <lastmod>2024-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -181,6 +174,13 @@
   
   <url>
     <loc>https://kdsunset.top/tags/%E6%B5%81%E7%A8%8B%E5%9B%BE/</loc>
+    <lastmod>2024-04-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/aosp/</loc>
     <lastmod>2024-04-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
