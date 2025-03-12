@@ -135,6 +135,13 @@
   </url>
   
   <url>
+    <loc>https://kdsunset.top/tags/LibreOffice/</loc>
+    <lastmod>2025-03-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kdsunset.top/tags/Ubuntu/</loc>
     <lastmod>2025-03-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -156,21 +163,7 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/GoMobile/</loc>
-    <lastmod>2025-03-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kdsunset.top/tags/AndroidLibV2rayLite/</loc>
-    <lastmod>2025-03-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kdsunset.top/tags/LibreOffice/</loc>
+    <loc>https://kdsunset.top/tags/aosp/</loc>
     <lastmod>2025-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -198,7 +191,14 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/aosp/</loc>
+    <loc>https://kdsunset.top/tags/GoMobile/</loc>
+    <lastmod>2025-03-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/AndroidLibV2rayLite/</loc>
     <lastmod>2025-03-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
