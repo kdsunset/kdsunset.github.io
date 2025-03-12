@@ -1,4 +1,5 @@
 document.getElementById('emailLink').addEventListener('click', function (event) {
+    event.preventDefault();  // 阻止默认跳转
     var email = 'fyr89757@gmail.com';
     var textarea = document.createElement('textarea');
     textarea.value = email;
