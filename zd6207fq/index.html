@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Ubuntu 下编译goldfish内核并使用模拟器运行 | kdsunset的个人博客</title><meta name="author" content="kdsunset"><meta name="copyright" content="kdsunset"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Ubuntu 下编译goldfish内核并使用模拟器运行前言要学习Android Framework开发，通常需要下载AOSP（Android Open Source Project）项目。AOSP包含了Android操作系统的全部源代码，但并不包含内核部分。若需进一步学习驱动开发，则需另行下载内核源码。 需要特别说明的是，Android系统使用的内核并非原生Linux Kernel，而是基于Li"><meta property="og:type" content="article"><meta property="og:title" content="Ubuntu 下编译goldfish内核并使用模拟器运行"><meta property="og:url" content="https://kdsunset.top/zd6207fq/index.html"><meta property="og:site_name" content="kdsunset的个人博客"><meta property="og:description" content="Ubuntu 下编译goldfish内核并使用模拟器运行前言要学习Android Framework开发，通常需要下载AOSP（Android Open Source Project）项目。AOSP包含了Android操作系统的全部源代码，但并不包含内核部分。若需进一步学习驱动开发，则需另行下载内核源码。 需要特别说明的是，Android系统使用的内核并非原生Linux Kernel，而是基于Li"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://kdsunset.top/img/avatar.jpg"><meta property="article:published_time" content="2025-04-06T09:35:00.000Z"><meta property="article:modified_time" content="2025-04-06T09:35:00.000Z"><meta property="article:author" content="kdsunset"><meta property="article:tag" content="goldfish"><meta property="article:tag" content="Linux内核"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://kdsunset.top/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://kdsunset.top/zd6207fq/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//hm.baidu.com"><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="google-site-verification" content="oMGwvAFHPDoXj1zawKNDffRQhkEu9BwZwNxguwSOmME"><meta name="baidu-site-verification" content="codeva-AyL3HHSEEb"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload='this.media="all"'><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?28e4ea7748d7403e4bf35f897a5e67e0";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":250},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: kdsunset","link":"链接: ","source":"来源: kdsunset的个人博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"Ubuntu 下编译goldfish内核并使用模拟器运行",isPost:!0,isHome:!1,isHighlightShrink:!1,isToc:!0,postUpdate:"2025-04-06 17:35:00"}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/my_bg_color.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="kdsunset的个人博客" type="application/atom+xml"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror='onerror=null,src="/img/friend_404.gif"' alt="avatar"></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr class="custom-hr"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i> <span>首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i> <span>归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i> <span>标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i> <span>分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i> <span>关于</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-donate"></i> <span>赞赏</span></a></div><div class="menus_item"><a class="site-page" href="/rss/"><i class="fa-fw fas fa-rss"></i> <span>RSS</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image:url(/img/bg_moon.png)"><nav id="nav"><span id="blog-info"><a href="/" title="kdsunset的个人博客"><span class="site-name">kdsunset的个人博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i> <span>搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i> <span>首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i> <span>归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i> <span>标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i> <span>分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i> <span>关于</span></a></div><div class="menus_item"><a class="site-page" href="/donate/"><i class="fa-fw fas fa-donate"></i> <span>赞赏</span></a></div><div class="menus_item"><a class="site-page" href="/rss/"><i class="fa-fw fas fa-rss"></i> <span>RSS</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Ubuntu 下编译goldfish内核并使用模拟器运行</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-06T09:35:00.000Z" title="发表于 2025-04-06 17:35:00">2025-04-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-06T09:35:00.000Z" title="更新于 2025-04-06 17:35:00">2025-04-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title="Ubuntu 下编译goldfish内核并使用模拟器运行"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Ubuntu-下编译goldfish内核并使用模拟器运行"><a href="#Ubuntu-下编译goldfish内核并使用模拟器运行" class="headerlink" title="Ubuntu 下编译goldfish内核并使用模拟器运行"></a>Ubuntu 下编译goldfish内核并使用模拟器运行</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>要学习Android Framework开发，通常需要下载AOSP（Android Open Source Project）项目。AOSP包含了Android操作系统的全部源代码，但并不包含内核部分。若需进一步学习驱动开发，则需另行下载内核源码。</p><p>需要特别说明的是，Android系统使用的内核并非原生Linux Kernel，而是基于Linux内核进行了深度定制，加入了进程间通信（Binder）、低内存管理等Android专属特性。内核有很多版本，我们可以选择谷歌官方维护的Android通用内核（Android Common Kernel, <a target="_blank" rel="noopener" href="https://source.android.com/docs/core/architecture/kernel/android-common?hl=zh-cn">ACK</a>），也可根据实际设备情况选用厂商开源的内核（需注意部分设备可能要求解锁Bootloader）。</p><p>简单起见，本文选用goldfish内核作为学习对象。该内核是Android模拟器专用版本，特别适合在虚拟环境中进行驱动开发测试。</p><p>值得注意的是，虽然Android基于Linux内核构建，但是AOSP是不需要和内核编译到一起的，而是在设备启动时，Bootloader 负责选择并加载内核，然后再启动 AOSP。<br><strong>本文所用环境</strong></p><ul><li>VMware + Ubuntu 22.04</li><li>Android ndk 16</li></ul><h2 id="1-下载及编译"><a href="#1-下载及编译" class="headerlink" title="1 下载及编译"></a>1 下载及编译</h2><h3 id="1-1-内核下载"><a href="#1-1-内核下载" class="headerlink" title="1.1 内核下载"></a>1.1 内核下载</h3><p>AOSP项目比较大，我们这里只获取 Goldfish 内核，而不下载整个 AOSP，clone完成需要手动checkout 出源码分支。<br>Android模拟器内核更新的比较慢，通常用的都是相对稳定、较老的内核：</p><ul><li>3.18：长期使用的老版本（早期 AOSP）</li><li>4.4 &#x2F; 4.9：主流 LTS 支持版本（支持 Android 9&#x2F;10）</li><li>4.14：进入 Android 10&#x2F;11 时期</li><li>5.4：对应 Android 12&#x2F;13（只维护了一个分支）</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://android.googlesource.com/kernel/goldfish</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果不支持科学上网，可以使用国内的源</span></span><br><span class="line">git <span class="built_in">clone</span> https://aosp.tuna.tsinghua.edu.cn/android/kernel/goldfish.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有远程分支</span></span><br><span class="line">git branch -r</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到其中一个分支</span></span><br><span class="line">git checkout android-goldfish-4.14-gchips </span><br></pre></td></tr></table></figure><h3 id="1-2-环境配置"><a href="#1-2-环境配置" class="headerlink" title="1.2 环境配置"></a>1.2 环境配置</h3><p><strong>安装gcc</strong><br>内核构建过程分为两个部分，ndk中的交叉编译工具链（x86_64-linux-android-gcc）负责内核本体的教程编译，同时内核构建脚本还需要一个本地主机的 gcc 来编译 host 工具（如 fixdep 等），因此需要安装gcc。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc</span><br></pre></td></tr></table></figure><p><strong>下载交叉编译器</strong><br>goldfish内核默认使用 GCC 编译，较高的版本才支持clang编译，可以通过<code>goldfish/Documentation/process/changes.rst</code>查看要求编译器的最低版本。</p><p>这里我们使用Android ndk提供的编译器来编译，打开Android studio 下载ndk，由于<br>goldfish 默认使用gcc编译器，而自 NDK r18 版本起，Android 官方推荐使用 Clang 作为默认的编译器，gcc被移除，因此我们选择下载r18以下的旧版本。</p><h3 id="1-3编译"><a href="#1-3编译" class="headerlink" title="1.3编译"></a>1.3编译</h3><p><strong>配置编译脚本</strong><br>使用<code>touch</code>命令新建<code>build.sh</code>配置编译脚本文件，输入以下内容：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置目标架构为 x86_64（模拟器内核一般是 x86 或 x86_64）</span></span><br><span class="line"><span class="built_in">export</span> ARCH=x86_64</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置子架构，通常与 ARCH 一致</span></span><br><span class="line"><span class="built_in">export</span> SUBARCH=x86_64</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置交叉编译工具链前缀（这是 Android NDK 中的编译器前缀）</span></span><br><span class="line"><span class="built_in">export</span> CROSS_COMPILE=x86_64-linux-android-</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置你的 NDK 路径，这个路径需要根据你的实际 NDK 安装位置修改</span></span><br><span class="line"><span class="built_in">export</span> NDK_PATH=/home/zhg/Workplace/Android/Sdk/ndk/16.1.4479499</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定 NDK 工具链的 bin 目录，里面包含交叉编译器等工具</span></span><br><span class="line"><span class="built_in">export</span> TOOLCHAIN=<span class="variable">$NDK_PATH</span>/toolchains/x86_64-4.9/prebuilt/linux-x86_64/bin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把工具链路径加入系统环境变量 PATH，方便在命令行中直接调用编译器</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$TOOLCHAIN</span>:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用默认配置文件 x86_64_ranchu_defconfig 生成 .config 文件</span></span><br><span class="line"><span class="comment"># ranchu 是 Android Emulator 使用的虚拟平台（QEMU 后端）</span></span><br><span class="line">make x86_64_ranchu_defconfig</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编译内核，-j$(nproc) 会使用所有可用 CPU 核心进行并行编译，加快速度</span></span><br><span class="line">make -j$(<span class="built_in">nproc</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p><strong>开始编译</strong><br>执行 <code>sh build.sh</code> 开始编译。编译过程比较简单，以下是一些可能出现的报错</p><p><strong>secclass_map 需要更新</strong><br>错误信息：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In file included from scripts/selinux/mdp/mdp.c:49:</span><br><span class="line">./security/selinux/include/classmap.h:247:2: error: <span class="comment">#error New address family defined, please update secclass_map.</span></span><br><span class="line">  247 | <span class="comment">#error New address family defined, please update secclass_map.</span></span><br><span class="line">      |  ^~~~~</span><br><span class="line">In file included from scripts/selinux/genheaders/genheaders.c:18:</span><br><span class="line">./security/selinux/include/classmap.h:247:2: error: <span class="comment">#error New address family defined, please update secclass_map.</span></span><br><span class="line">  247 | <span class="comment">#error New address family defined, please update secclass_map.</span></span><br><span class="line">      |  ^~~~~</span><br><span class="line">make[3]: *** [scripts/Makefile.host:102：scripts/selinux/mdp/mdp] 错误 1</span><br><span class="line">make[2]: *** [scripts/Makefile.build:671：scripts/selinux/mdp] 错误 2</span><br><span class="line">make[2]: *** 正在等待未完成的任务....</span><br></pre></td></tr></table></figure><p>解决方法：打开<code>security/selinux/include/classmap.h</code> 在<code>secclass_map</code>结构体增加 添加新的地址族对应项。<br>或者临时解决：执行 <code>grep -r &quot;PF_MAX&quot; /usr/include/</code>查找PF_MAX的值，修改if语句：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">undef</span> PF_MAX</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PF_MAX 44</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> PF_MAX &gt; 44</span></span><br><span class="line"><span class="meta">#<span class="keyword">error</span> New address family defined, please update secclass_map.</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure><p><strong>报错 multiple definition of ‘yylloc’重复定义</strong><br>错误信息：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ld: scripts/dtc/dtc-parser.tab.o:(.bss+0x10): multiple definition of yylloc<span class="string">&#x27;; scripts/dtc/dtc-lexer.lex.o:(.bss+0x0): first defined here</span></span><br><span class="line"><span class="string">collect2: error: ld returned 1 exit status</span></span><br></pre></td></tr></table></figure><p>解决方法：使用<code>grep -rw &quot;YYLTYPE yylloc;&quot;</code>命令搜索整个变量，找出到除了dtc-lexer.lex.c 外的(<code>scripts/dtc/dtc-lexer.l</code>、<code>dtc-lexer.lex.c_shipped</code>)所有<code>YYLTYPE yylloc</code>改成<code>extern YYLTYPE yylloc</code></p><p><strong>完成</strong><br>当终端输出以下信息代表内核映像 bzImage 已成功构建。表示bzImage已经生成，位于arch&#x2F;x86&#x2F;boot&#x2F;bzImage。bzImage 是经过压缩的内核映像文件，用于启动系统。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Kernel: <span class="built_in">arch</span>/x86/boot/bzImage is ready  (<span class="comment">#1)</span></span><br></pre></td></tr></table></figure><h2 id="2-使用avd启动加载内核"><a href="#2-使用avd启动加载内核" class="headerlink" title="2 使用avd启动加载内核"></a>2 使用avd启动加载内核</h2><p>启动内核映像通常依赖于使用模拟器或在物理硬件。以上编译的goldfish内核镜像bzImage可以用模拟器（ Android Emulator）来运行。</p><p><strong>创建模拟器</strong><br>运行Android stuido并打开<code>Virtual Device Manager</code>创建一个模拟器，由于我们编译的Goldfish 内核是针对 x86_64 架构的，因此模拟器镜像也选择x86_64的，Android版本也要与内核版本兼容，我们前面选择的是内核版本 4.14，与之对应的是Android10（android-29）</p><p>如果提示<code>Your CPU does not support required features (VT-x or SVM).</code>，需要启用虚拟化技术，则打开打开VMware的虚拟化的设置：</p><ol><li>关闭当前虚拟机，依次选择虚拟机-&gt;设置-&gt;硬件tab下的处理器选项，勾选右侧的<code>虚拟化Intel VT-x/EPT或AMD-V/RVI</code>。</li><li>如果仍然报错：关闭有冲突的windows虚拟化功能，打开Windows主机的“启用或关闭windows功能”，关闭所有有关的功能：包括Hyper-V、Windows虚拟机监控程序平台、适用于Linux的Windows子系统、虚拟机平台等。</li></ol><p><strong>使用命令运行模拟器</strong><br>为了能在终端使用模拟器的命令，需要配置Android sdk环境变量:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> ANDROID_HOME=//home/zhg/Workplace/Android/Sdk</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$ANDROID_HOME</span>/emulator:<span class="variable">$ANDROID_HOME</span>/platform-tools:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure><p>启动 AVD，<code>&lt;avd_name&gt;</code>是上面在Android studio中创建avd时的名称。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过 -kernel 命令行参数指定内核</span></span><br><span class="line">emulator -avd &lt;avd_name&gt; -kernel /path/to/your/bzImage -verbose</span><br></pre></td></tr></table></figure><p>执行命令后，可能会出现在虚拟机上运行模拟器（禁止套娃）导致性能下降之类的风险提示，可以忽略。</p><p><strong>查看模拟器内核版本</strong><br>等模拟器运行起来后，在模拟器的设置-&gt;关于模拟器页面-&gt;<code>Android版本</code>中可以看到内核版本信息，也可以使用命令<code>adb shell uname -a</code>查看，根据版本号和时间可以确定运行的是我们刚才编译的内核。</p><p><strong>查看内核日志</strong><br>查看内核控件日志，logcat只能查看用户空间的日志，dmesg可以查看全部日志。<br>Android 8.0（Oreo）及以上版本，访问 dmesg需要root权限</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb root  <span class="comment"># 获取 root 权限</span></span><br><span class="line">adb shell dmesg</span><br><span class="line"><span class="comment"># adb shell dmesg | grep xxx</span></span><br></pre></td></tr></table></figure><p>以上就是关于goldfish内核的编译及运行，下一篇我们将使用goldfish内核来编写一个简单的驱动来学习相关知识。</p><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>[1] <a target="_blank" rel="noopener" href="https://juejin.cn/post/7235309338097123388">学习 Binder 的预备知识3 —— linux 驱动开发入门</a></p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者:</span> <span class="post-copyright-info"><a href="https://kdsunset.top">kdsunset</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接:</span> <span class="post-copyright-info"><a href="https://kdsunset.top/zd6207fq/">https://kdsunset.top/zd6207fq/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明:</span> <span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://kdsunset.top" target="_blank">kdsunset的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/goldfish/">goldfish</a><a class="post-meta__tags" href="/tags/Linux%E5%86%85%E6%A0%B8/">Linux内核</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload='this.media="all"'><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/u8wwtapk/" title="使用apktool实现一个apk修改和打包脚本"><div class="cover" style="background:var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">使用apktool实现一个apk修改和打包脚本</div></div></a></div></nav><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i> <span>评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Gitalk</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/avatar.jpg" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="author-info__name">kdsunset</div><div class="author-info__description">kdsunset的个人博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/kdsunset"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ubuntu-%E4%B8%8B%E7%BC%96%E8%AF%91goldfish%E5%86%85%E6%A0%B8%E5%B9%B6%E4%BD%BF%E7%94%A8%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%BF%90%E8%A1%8C"><span class="toc-text">Ubuntu 下编译goldfish内核并使用模拟器运行</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BD%E5%8F%8A%E7%BC%96%E8%AF%91"><span class="toc-text">1 下载及编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%86%85%E6%A0%B8%E4%B8%8B%E8%BD%BD"><span class="toc-text">1.1 内核下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-text">1.2 环境配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3%E7%BC%96%E8%AF%91"><span class="toc-text">1.3编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8avd%E5%90%AF%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%86%85%E6%A0%B8"><span class="toc-text">2 使用avd启动加载内核</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-text">参考链接</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/zd6207fq/" title="Ubuntu 下编译goldfish内核并使用模拟器运行">Ubuntu 下编译goldfish内核并使用模拟器运行</a><time datetime="2025-04-06T09:35:00.000Z" title="发表于 2025-04-06 17:35:00">2025-04-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/u8wwtapk/" title="使用apktool实现一个apk修改和打包脚本">使用apktool实现一个apk修改和打包脚本</a><time datetime="2024-08-22T08:22:00.000Z" title="发表于 2024-08-22 16:22:00">2024-08-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/lireofad/" title="Ubuntu 下编译LibreOffice Android版">Ubuntu 下编译LibreOffice Android版</a><time datetime="2024-04-15T02:35:00.000Z" title="发表于 2024-04-15 10:35:00">2024-04-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/ngiv2ray/" title="基于nginx搭建v2ray服务端配置vmess tls websocket">基于nginx搭建v2ray服务端配置vmess tls websocket</a><time datetime="2024-04-01T07:19:00.000Z" title="发表于 2024-04-01 15:19:00">2024-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/ubaosp13/" title="Ubuntu 下编译AOSP源码">Ubuntu 下编译AOSP源码</a><time datetime="2024-04-01T01:43:00.000Z" title="发表于 2024-04-01 09:43:00">2024-04-01</time></div></div></div></div></div></div></main><footer id="footer" style="background-image:url(/img/bg_moon.png)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By kdsunset</div><div class="framework-info"><span>框架</span> <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题</span> <a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '2wvhFjzp3cI1Jo1r0kGvI0PA-MdYXbMMI',
+      appKey: 'jqpcAA3JdCnCM8NVPMY4nrOR',
+      avatar: 'monsterid',
+      serverURLs: 'https://api.kdsunset.top',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: '87bca2541154998d9e5d',
+      clientSecret: 'b1b448a15758ff09af4f4810c6a66d479d01e00d',
+      repo: 'kdsunset.github.io',
+      owner: 'kdsunset',
+      admin: ['kdsunset'],
+      id: '272e4b8d23cc100769b0b139891755d9',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+      await getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Valine' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script src="//github.elemecdn.com/leancloud-storage@3/dist/av-min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i> <span>数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
