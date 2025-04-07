@@ -192,14 +192,7 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/goldfish/</loc>
-    <lastmod>2025-04-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kdsunset.top/tags/Linux%E5%86%85%E6%A0%B8/</loc>
+    <loc>https://kdsunset.top/tags/GitHub-Pages/</loc>
     <lastmod>2025-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -220,13 +213,6 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/GitHub-Pages/</loc>
-    <lastmod>2025-04-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kdsunset.top/tags/LibreOffice/</loc>
     <lastmod>2025-04-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -241,7 +227,14 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/aosp/</loc>
+    <loc>https://kdsunset.top/tags/goldfish/</loc>
+    <lastmod>2025-04-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/Linux%E5%86%85%E6%A0%B8/</loc>
     <lastmod>2025-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -256,6 +249,13 @@
   
   <url>
     <loc>https://kdsunset.top/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/</loc>
+    <lastmod>2025-04-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/aosp/</loc>
     <lastmod>2025-04-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
