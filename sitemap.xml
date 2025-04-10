@@ -29,15 +29,6 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/index.html</loc>
-    
-    <lastmod>2024-05-11</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://kdsunset.top/categories/index.html</loc>
     
     <lastmod>2024-05-11</lastmod>
@@ -48,6 +39,15 @@
   
   <url>
     <loc>https://kdsunset.top/about/index.html</loc>
+    
+    <lastmod>2024-05-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/index.html</loc>
     
     <lastmod>2024-05-11</lastmod>
     
@@ -155,21 +155,7 @@
 
   
   <url>
-    <loc>https://kdsunset.top/tags/Hexo/</loc>
-    <lastmod>2025-04-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kdsunset.top/tags/Ubuntu/</loc>
-    <lastmod>2025-04-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kdsunset.top/tags/envoy/</loc>
     <lastmod>2025-04-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -183,7 +169,28 @@
   </url>
   
   <url>
+    <loc>https://kdsunset.top/tags/Hexo/</loc>
+    <lastmod>2025-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/envoy/</loc>
+    <lastmod>2025-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://kdsunset.top/tags/GitHub-Pages/</loc>
+    <lastmod>2025-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/LibreOffice/</loc>
     <lastmod>2025-04-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -204,13 +211,6 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/LibreOffice/</loc>
-    <lastmod>2025-04-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://kdsunset.top/tags/GoMobile/</loc>
     <lastmod>2025-04-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -225,7 +225,21 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/aosp/</loc>
+    <loc>https://kdsunset.top/tags/apktool/</loc>
+    <lastmod>2025-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/</loc>
+    <lastmod>2025-04-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://kdsunset.top/tags/v2ray/</loc>
     <lastmod>2025-04-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -253,21 +267,7 @@
   </url>
   
   <url>
-    <loc>https://kdsunset.top/tags/v2ray/</loc>
-    <lastmod>2025-04-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kdsunset.top/tags/apktool/</loc>
-    <lastmod>2025-04-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://kdsunset.top/tags/%E5%8F%8D%E7%BC%96%E8%AF%91/</loc>
+    <loc>https://kdsunset.top/tags/aosp/</loc>
     <lastmod>2025-04-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
