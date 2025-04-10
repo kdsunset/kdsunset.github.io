@@ -1,25 +1,32 @@
-document.getElementById('emailLink').addEventListener('click', function (event) {
-    event.preventDefault();  // 阻止默认跳转
-    var email = 'fyr89757@gmail.com';
-    var textarea = document.createElement('textarea');
-    textarea.value = email;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
+// donate.js
+function bindEmailCopyHandler() {
+    const link = document.getElementById('emailLink');
+    const notification = document.getElementById('toast');
 
-    // 获取点击位置
-    var xPos = event.clientX;
-    var yPos = event.clientY;
+    if (!link || !notification) return;
 
-    // 显示纯文本提示，并定位到点击位置
-    var notification = document.getElementById('toast');
-    notification.style.left = xPos + 'px';
-    notification.style.top = (yPos + 20) + 'px'; // 在点击位置稍微下方显示
-    notification.style.display = 'inline';  // 显示提示信息
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
 
-    // 2秒后隐藏提示信息
-    setTimeout(function() {
-        notification.style.display = 'none';
-    }, 2000);
-});
+        const email = 'fyr89757@gmail.com';
+        const textarea = document.createElement('textarea');
+        textarea.value = email;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        // 获取点击位置
+        const xPos = event.clientX;
+        const yPos = event.clientY;
+
+        // 定位 toast 并显示
+        notification.style.left = xPos + 'px';
+        notification.style.top = (yPos + 20) + 'px';
+        notification.style.display = 'inline';
+
+        setTimeout(function () {
+            notification.style.display = 'none';
+        }, 2000);
+    });
+}
