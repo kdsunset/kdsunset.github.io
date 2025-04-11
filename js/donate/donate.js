@@ -30,3 +30,7 @@ function bindEmailCopyHandler() {
         }, 2000);
     });
 }
+// 自动调用
+document.addEventListener('DOMContentLoaded', function () {
+    bindEmailCopyHandler();
+});
